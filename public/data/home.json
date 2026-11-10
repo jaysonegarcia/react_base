@@ -1,0 +1,39 @@
+{
+  "title": "Your next idea starts here.",
+  "description": "The setup is done. A clean React foundation with useful defaults, a few example pages, and plenty of room to build something of your own.",
+  "badge": "Ready for a fresh start",
+  "aboutLabel": "Explore the starter",
+  "contactLabel": "Try the contact page",
+  "stack": "React · TypeScript · Tailwind CSS · shadcn/ui",
+  "previewTitle": "A place for everything",
+  "previewLines": [
+    "src/",
+    "├── app/          routing",
+    "├── pages/        your screens",
+    "├── components/   layouts & UI",
+    "├── config/       site details",
+    "└── lib/          shared helpers"
+  ],
+  "command": "npm install && npm run dev",
+  "featuresTitle": "Less setup. More building.",
+  "features": [
+    {
+      "id": "customize",
+      "icon": "blocks",
+      "title": "Make it yours",
+      "description": "Accessible shadcn/ui components, Tailwind utilities, and a theme you can change in one place."
+    },
+    {
+      "id": "structure",
+      "icon": "folder-code",
+      "title": "Find your way around",
+      "description": "Pages, layouts, and UI components have a home. No elaborate architecture to learn first."
+    },
+    {
+      "id": "deploy",
+      "icon": "rocket",
+      "title": "Ship when you’re ready",
+      "description": "Formatting, linting, type checks, and a Vercel configuration are already in place."
+    }
+  ]
+}

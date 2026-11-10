@@ -55,7 +55,9 @@ add one when your project needs automated behavior tests.
 ## Project structure
 
 ```text
-public/                     Static files copied into the build
+public/
+  data/home.json            Home content fetched in the browser
+  favicon.svg               Site icon
 src/
   app/app.tsx               Route definitions
   components/
@@ -72,7 +74,9 @@ src/
       Textarea/Textarea.tsx
     PageHeading/PageHeading.tsx
   config/site.ts            Site name, description, navigation, and email
+  hooks/useHomeContent.ts   Fetch state, retry, and request cleanup
   lib/utils.ts              Shared class-name helper
+  lib/home-content.ts       Typed fetch function and response validation
   pages/                    Home, About, Contact, and Not Found
   index.css                 Tailwind imports and theme tokens
   main.tsx                  React entry point
@@ -150,6 +154,53 @@ component before replacing customized code. Finish with `npm run format` and
 Installed examples include Button, Card, Input, Textarea, Label, and Badge.
 The current CLI uses the `cn` package; `src/lib/utils.ts` re-exports that helper
 for app code. The shadcn package is a development dependency for its CLI and CSS.
+
+### Learn fetching with the Home page
+
+Home loads its content from `public/data/home.json` with the browser's `fetch`
+API. Edit that JSON to change the heading, badge, button labels, project preview,
+and feature list. Vite serves files inside `public/` from the site root:
+`public/data/home.json` becomes `/data/home.json`.
+
+Follow the flow:
+
+```text
+public/data/home.json
+  → src/lib/home-content.ts       fetch → check HTTP status → validate JSON
+  → src/hooks/useHomeContent.ts   loading / success / error + retry
+  → src/pages/home.tsx            render the result
+```
+
+The key request is:
+
+```ts
+const response = await fetch(`${import.meta.env.BASE_URL}data/home.json`, {
+  signal,
+})
+```
+
+`BASE_URL` keeps the path relative to Vite's configured base. To connect a real
+API, change this URL in `src/lib/home-content.ts`. Keep the same response shape,
+or update `HomeContent` and its runtime validator together. An external API must
+allow your site's origin through CORS.
+
+The example checks `response.ok` because `fetch` does not reject HTTP errors.
+It handles invalid JSON and unexpected response shapes, shows a **Try again**
+button on failure, and aborts requests when the page unmounts. React StrictMode
+may show a canceled initial request in development; this is expected cleanup.
+
+JSON cannot contain React components, so each feature stores an icon name
+(`blocks`, `folder-code`, or `rocket`). `home.tsx` maps that name to a Lucide icon.
+Keep feature IDs unique. To add an icon, update the mapping, `HomeFeature`, and
+the validator together.
+
+To see loading, throttle the request in browser DevTools. To test errors, block
+`/data/home.json`, navigate away and back to Home, then unblock it and choose
+**Try again**. The shared navigation remains usable during loading and errors.
+
+This is a static JSON example served by Vite/Vercel, not a database or writable
+API. Changes to the deployed JSON require a new deployment. Everything in
+`public/` is publicly downloadable; keep credentials out of it.
 
 ### Connect the Contact form
 
