@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+package-lock.json
+*.tsbuildinfo
+.superpowers
+docs/superpowers
+.vercel
