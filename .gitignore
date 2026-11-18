@@ -5,6 +5,8 @@ coverage/
 *.tsbuildinfo
 *.local
 *.log
+__pycache__/
+*.py[cod]
 .vite/
 .vercel/
 
@@ -21,18 +23,15 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
-# AI assistants: local instructions, settings, caches, and session data
-[Cc][Ll][Aa][Uu][Dd][Ee].md
+# Shared CLAUDE.md, AGENTS.md, SKILLS.md (including lowercase) are trackable.
+# OpenCode configuration and docs/superpowers/ are also trackable.
+# Other AI assistant local instructions, settings, caches, and session data
 [Cc][Ll][Aa][Uu][Dd][Ee].local.md
-[Aa][Gg][Ee][Nn][Tt][Ss].md
 [Aa][Gg][Ee][Nn][Tt].md
 [Gg][Ee][Mm][Ii][Nn][Ii].md
 .claude/
 .codex/
 .gemini/
-.opencode/
-opencode.json
-opencode.jsonc
 .[Oo][Mm][Oo]/
 [Oo][Mm][Oo]/
 .oh-my-opencode/
@@ -76,7 +75,6 @@ oh-my-opencode.jsonc
 mcp.json
 .mcp/
 .antigravity/
-docs/superpowers/
 
 # Browser automation artifacts (keep authored tests/configuration trackable)
 .playwright/

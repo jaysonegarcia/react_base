@@ -242,11 +242,30 @@ account on your behalf. For background, see [Vercel's Vite documentation](https:
 
 ## Git hygiene
 
+### AI project instructions
+
+- `AGENTS.md` contains the shared project conventions and verification commands;
+  OpenCode loads it automatically.
+- `CLAUDE.md` imports `AGENTS.md` for Claude Code. Maintain shared rules in
+  `AGENTS.md` to keep both tools aligned.
+- `opencode.jsonc` is a minimal project-settings file with editor schema support.
+  Add settings when needed; model and provider choices can stay in user settings.
+- `.opencode/skills/` includes project-local copies of `frontend-design` and
+  `ui-ux-pro-max`, with their supporting resources. `AGENTS.md` instructs
+  assistants to load both for UI work.
+- `.opencode/agents/reviewer.md` defines an optional read-only review assistant.
+  See [the project AI tools guide](.opencode/README.md) for usage and maintenance.
+
 `.gitignore` excludes dependencies, build output, local environment files,
 Vercel state, common AI assistant instructions/settings/caches, and browser
-automation output. This includes case variants of `CLAUDE.md`, `AGENTS.md`,
-`GEMINI.md`, OMO, `.serena`, `.playwright`, Claude, Codex, OpenCode, Cursor,
-Windsurf, Copilot instruction files, and Superpowers planning notes.
+automation output. This includes case variants of `GEMINI.md`,
+local Claude overrides, `.claude/`, OMO, `.serena`, `.playwright`, Codex, Cursor,
+Windsurf, Copilot instruction files, and `.superpowers/` scratch data.
+
+Shared `CLAUDE.md`, `AGENTS.md`, and `SKILLS.md` (including lowercase variants),
+`.opencode/`, `opencode.json`, `opencode.jsonc`,
+and `docs/superpowers/` are trackable so project instructions, configuration,
+and design/implementation plans can be committed with the code.
 
 Authored Playwright tests and configuration, normal application code, the lockfile,
 and GitHub workflows remain trackable. Add rules for any new tools you adopt.
