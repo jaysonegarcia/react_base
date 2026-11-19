@@ -2,6 +2,7 @@ import { Blocks, FolderCode, Rocket, Terminal } from 'lucide-react'
 import { Link } from 'react-router'
 import { useHomeContent } from '@/hooks/useHomeContent'
 import { PageHeading } from '@/components/PageHeading/PageHeading'
+import { FeaturedNews } from '@/components/FeaturedNews/FeaturedNews'
 import { Badge } from '@/components/ui/Badge/Badge'
 import { Button } from '@/components/ui/Button/Button'
 import {
@@ -116,6 +117,11 @@ export function HomePage() {
           })}
         </div>
       </section>
+      <FeaturedNews
+        title={content.newsTitle}
+        description={content.newsDescription}
+        viewAllLabel={content.newsViewAllLabel}
+      />
     </div>
   )
 }

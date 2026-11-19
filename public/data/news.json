@@ -1,0 +1,76 @@
+{
+  "articles": [
+    {
+      "slug": "news-section-ready-for-your-api",
+      "title": "A news section that swaps cleanly for your API",
+      "excerpt": "The News pages read from one JSON file, so replacing it with a real endpoint is a small change rather than a rewrite.",
+      "category": "Engineering",
+      "publishedAt": "2026-11-12",
+      "body": [
+        "The new News pages read from a single JSON file in public/data, the same way the home page does. The shape is deliberately plain: a slug, a title, an excerpt, a category, a date, and an array of paragraphs.",
+        "Because every article is fetched at runtime, swapping the file for a real endpoint is a small change. Point the fetch at your API, keep the response shape, and the list, detail page, and home highlights continue to work.",
+        "Validation runs before rendering. If a response is missing a field or uses an unexpected date format, the page shows its error state instead of failing halfway through a render."
+      ]
+    },
+    {
+      "slug": "why-the-starter-fetches-its-content",
+      "title": "Why the starter fetches its content",
+      "excerpt": "Loading page copy over the network looks like extra work. It is also the clearest way to learn the pattern you will use with real data.",
+      "category": "Engineering",
+      "publishedAt": "2026-10-28",
+      "body": [
+        "A starter can hardcode its copy and stay simple. This one fetches it instead, because the first real feature you add will probably fetch something too, and the shape of that work is worth seeing early.",
+        "The pattern is intentionally modest: a typed response, a runtime check, a loading state, an error state with a retry, and a request that is cancelled when you leave the page. No data library, no cache, no hidden behaviour.",
+        "It also keeps the door open. A JSON file today and an API tomorrow share the same code path, so the step between them is mostly a URL change and a matching response."
+      ]
+    },
+    {
+      "slug": "designing-pages-that-stay-out-of-the-way",
+      "title": "Designing pages that stay out of the way",
+      "excerpt": "The example pages use a narrow set of type sizes, one accent colour, and quiet rules instead of decorated cards.",
+      "category": "Design",
+      "publishedAt": "2026-09-16",
+      "body": [
+        "The News list is built as an editorial column rather than a grid of cards. Each entry has a date and category in a narrow rail and a headline that carries the weight, with a rule between entries to keep the rhythm.",
+        "That choice keeps the page readable at any length. It also makes the content the loudest element on the screen, which is what a list of writing should do.",
+        "The detail page follows the same logic: one column, a comfortable measure, and enough space between paragraphs that the text can be read without effort."
+      ]
+    },
+    {
+      "slug": "a-smaller-set-of-defaults",
+      "title": "A smaller set of defaults",
+      "excerpt": "Fewer decisions at the start means less to undo later. The starter keeps its dependencies and its conventions deliberately narrow.",
+      "category": "Product",
+      "publishedAt": "2025-12-03",
+      "body": [
+        "Every default in a starter is a decision someone else made for you. The goal here is to keep those decisions few, visible, and easy to replace.",
+        "That is why routing, styling, and components stay close to their libraries. There is no custom abstraction layer to learn before you can change a page.",
+        "When a project genuinely needs shared state, for example a store with a cart, the right tool can be added then. Adding it in advance only makes the starting point heavier."
+      ]
+    },
+    {
+      "slug": "shipping-the-starter-to-vercel",
+      "title": "Shipping the starter to Vercel",
+      "excerpt": "The deployment configuration is intentionally small: a Vite build, a static output folder, and a fallback for client-side routes.",
+      "category": "Release",
+      "publishedAt": "2025-06-19",
+      "body": [
+        "The included vercel.json describes a Vite build and points at the dist folder. The only unusual part is the rewrite that sends unknown paths to index.html.",
+        "Without that rewrite, opening a nested URL such as a news article directly would ask the server for a file that does not exist. The rewrite lets the router handle the path in the browser.",
+        "The configuration is meant to be edited. Change the build command, add headers, or move to another host; nothing in the application depends on Vercel specifically."
+      ]
+    },
+    {
+      "slug": "what-belongs-in-a-starter",
+      "title": "What belongs in a starter",
+      "excerpt": "A starter should show the shape of real work without pretending to be the finished product.",
+      "category": "Product",
+      "publishedAt": "2024-11-05",
+      "body": [
+        "A useful starter answers a few questions before you write any code: where do pages live, how is data loaded, how are errors shown, and what does a complete screen look like?",
+        "It should not answer every question. Authentication, payments, and state management are easier to add when a project actually needs them, and easier to understand when they arrive with a real requirement.",
+        "The examples here are meant to be read and then changed. Keep the parts that fit, delete the rest, and let the project become specific."
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # React Starter
 
-A small, ready-to-customize React + TypeScript starter with Home, About, Contact,
-and 404 pages. Built with Vite, Tailwind CSS v4, shadcn/ui, and React Router.
+A small, ready-to-customize React + TypeScript starter with Home, News, About,
+Contact, and 404 pages. Built with Vite, Tailwind CSS v4, shadcn/ui, and React Router.
 
 ## Quick start
 
@@ -57,6 +57,7 @@ add one when your project needs automated behavior tests.
 ```text
 public/
   data/home.json            Home content fetched in the browser
+  data/news.json            News articles fetched in the browser
   favicon.svg               Site icon
 src/
   app/app.tsx               Route definitions
@@ -72,12 +73,17 @@ src/
       Input/Input.tsx
       Label/Label.tsx
       Textarea/Textarea.tsx
+    FeaturedNews/FeaturedNews.tsx
+    NewsListItem/NewsListItem.tsx
     PageHeading/PageHeading.tsx
+    YearFilter/YearFilter.tsx
   config/site.ts            Site name, description, navigation, and email
   hooks/useHomeContent.ts   Fetch state, retry, and request cleanup
+  hooks/useNews.ts          News list and single-article fetch state
   lib/utils.ts              Shared class-name helper
   lib/home-content.ts       Typed fetch function and response validation
-  pages/                    Home, About, Contact, and Not Found
+  lib/news.ts               Article types, validation, filtering, and dates
+  pages/                    Home, News, Article, About, Contact, and Not Found
   index.css                 Tailwind imports and theme tokens
   main.tsx                  React entry point
 components.json             shadcn CLI settings and import aliases
@@ -201,6 +207,52 @@ To see loading, throttle the request in browser DevTools. To test errors, block
 This is a static JSON example served by Vite/Vercel, not a database or writable
 API. Changes to the deployed JSON require a new deployment. Everything in
 `public/` is publicly downloadable; keep credentials out of it.
+
+### News list, article pages, and year filtering
+
+`/news` lists every article in `public/data/news.json`, newest first, and
+`/news/:slug` renders one article. Home shows the three latest from the same file,
+followed by a **View all news** button, so all three views stay in sync.
+
+Each article has this shape:
+
+```json
+{
+  "slug": "news-section-ready-for-your-api",
+  "title": "A news section that swaps cleanly for your API",
+  "excerpt": "One or two sentences shown in lists.",
+  "category": "Engineering",
+  "publishedAt": "2026-11-12",
+  "body": ["First paragraph.", "Second paragraph."]
+}
+```
+
+- `slug` becomes the article URL: `sample-news-1` is `/news/sample-news-1`.
+- `publishedAt` must be `YYYY-MM-DD`. Dates are formatted and filtered in UTC so
+  the day does not shift between time zones.
+- `body` is an array of plain-text paragraphs.
+- `category` appears beside the date in lists and on the article page.
+
+The year filter uses links such as `/news?year=2026`, so a filtered view can be
+shared and survives a refresh. Years are derived from the loaded articles, and an
+unknown year falls back to **All**. A result count follows the filter.
+
+The data flow mirrors Home:
+
+```text
+public/data/news.json
+  → src/lib/news.ts               fetch → check HTTP status → validate → sort
+  → src/hooks/useNews.ts          loading / success / error + retry
+  → src/pages/news.tsx            year filter and list
+  → src/pages/news-article.tsx    single article or not-found view
+```
+
+To connect a real API, change the URL in `src/lib/news.ts`. Keep the
+`{ "articles": [...] }` response shape, or update `NewsResponse` and its
+validator together. The example article page reads the list and finds the slug;
+replace `fetchNewsArticle` with a request to your article endpoint if one exists.
+An unknown slug renders an **Article not found** view with a link back to the
+list, and external APIs must allow your site's origin through CORS.
 
 ### Connect the Contact form
 

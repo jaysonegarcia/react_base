@@ -16,6 +16,9 @@
   ],
   "command": "npm install && npm run dev",
   "featuresTitle": "Less setup. More building.",
+  "newsTitle": "News from the starter",
+  "newsDescription": "Short notes on the patterns, choices, and releases behind this template.",
+  "newsViewAllLabel": "View all news",
   "features": [
     {
       "id": "customize",

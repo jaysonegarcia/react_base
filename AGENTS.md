@@ -45,7 +45,7 @@ Check `package.json` and its lockfile for installed versions.
 - Keep related primitives together, such as `CardTitle` in `Card/Card.tsx`.
 - Use named exports and `@/` imports for files under `src/`.
 - `src/config/site.ts`: site identity, navigation, and contact details.
-- `src/hooks/`: hooks such as `useHomeContent.ts`.
+- `src/hooks/`: hooks such as `useHomeContent.ts` and `useNews.ts`.
 - `src/lib/`: shared helpers and fetching/validation code.
 - Use two spaces, single quotes, and no semicolons, as configured in Prettier.
 - Use Tailwind v4 theme tokens in `src/index.css` and existing shadcn components.
@@ -67,6 +67,24 @@ Check `package.json` and its lockfile for installed versions.
 - Store icon identifiers in JSON and map them to React components in the UI.
 - `public/` is committed source content copied into the build. It is publicly
   accessible, so it must not contain credentials or private data.
+
+### News example
+
+- Articles live in `public/data/news.json` as `{ "articles": [...] }`. Each article
+  has `slug`, `title`, `excerpt`, `category`, `publishedAt` (`YYYY-MM-DD`), and
+  `body` (paragraph array).
+- `src/lib/news.ts` owns article types, runtime validation, sorting, year
+  filtering, date formatting, and the fetch. `src/hooks/useNews.ts` owns list and
+  single-article loading, error, retry, and request cleanup.
+- `/news` renders the list with a year filter; `/news/:slug` renders one article
+  and shows a not-found view for unknown slugs. Home shows the three latest from
+  the same endpoint with a **View all news** link.
+- The year filter is URL state (`/news?year=2026`) built from links with
+  `aria-current`, not client-only state. Derive years from loaded articles and
+  treat an unknown year as **All** so a stale link still renders.
+- Format dates in UTC; parsing `YYYY-MM-DD` as local time can shift the day.
+- Keep home news copy (`newsTitle`, `newsDescription`, `newsViewAllLabel`) in
+  `home.json`, and update the `HomeContent` type and validator with it.
 
 ## Behavior and future features
 

@@ -16,6 +16,9 @@ export type HomeContent = {
   previewLines: string[]
   command: string
   featuresTitle: string
+  newsTitle: string
+  newsDescription: string
+  newsViewAllLabel: string
   features: HomeFeature[]
 }
 
@@ -50,6 +53,9 @@ function isHomeContent(value: unknown): value is HomeContent {
     'previewTitle',
     'command',
     'featuresTitle',
+    'newsTitle',
+    'newsDescription',
+    'newsViewAllLabel',
   ] as const
 
   return (
